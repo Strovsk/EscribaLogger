@@ -1,6 +1,8 @@
-from .DPSingleton import DPSingleton
 import logging
-from .drivers import driver_file, driver_stdout, DriverOption
+
+from .DPSingleton import DPSingleton
+from .drivers import DriverOption, driver_file, driver_stdout
+from .process_extra_context import process_extra_context
 
 
 class Log(metaclass=DPSingleton):
@@ -10,6 +12,7 @@ class Log(metaclass=DPSingleton):
     def __init__(self, log_name: str = None) -> None:
         self.root_logger.name = log_name
         self.root_logger.setLevel(logging.DEBUG)
+        self.add_filter("extra_context", None)
 
     @staticmethod
     def handle_any_exception(exc_type, exc_value, exc_traceback):
@@ -41,10 +44,10 @@ class Log(metaclass=DPSingleton):
         driver_func: callable = None,
         driver_options: DriverOption = None,
     ):
-        if driver_name not in Log.drivers:
-            return
         if driver_func:
             Log.drivers[driver_name] = driver_func
+        elif driver_name not in Log.drivers:
+            raise Exception("Driver not exists")
 
         current_handlers_list = list(
             map(
@@ -61,8 +64,20 @@ class Log(metaclass=DPSingleton):
     @staticmethod
     def remove_driver(driver_name: str):
         if not driver_name:
-            return
-        Log.root_logger.removeHandler(Log.drivers[driver_name])
+            raise ValueError("You must specify a valid driver name!!!")
+        if driver_name not in Log.drivers.keys():
+            raise ValueError(
+                f'Driver "{driver_name}" not found. Available drivers: {str(Log.drivers.keys())}!!!'
+            )
+
+        Log.root_logger.handlers = list(
+            filter(
+                lambda handler: type(handler).__name__
+                != type(Log.drivers[driver_name](driver_option={})).__name__,
+                Log.root_logger.handlers,
+            )
+        )
+        del Log.drivers[driver_name]
 
     @staticmethod
     def clear_drivers():
@@ -70,10 +85,12 @@ class Log(metaclass=DPSingleton):
 
     @staticmethod
     def info(msg: str, extra: dict = None):
+        Log.add_filter("extra_context", process_extra_context(extra))
         Log.root_logger.info(msg, extra=extra)
 
     @staticmethod
     def warning(msg: str, extra: dict = None):
+        Log.add_filter("extra_context", process_extra_context(extra))
         Log.root_logger.warning(msg, extra=extra)
 
     @staticmethod
@@ -82,8 +99,10 @@ class Log(metaclass=DPSingleton):
 
     @staticmethod
     def error(msg: str, extra: dict = None):
+        Log.add_filter("extra_context", process_extra_context(extra))
         Log.root_logger.error(msg, extra=extra)
 
     @staticmethod
     def critical(msg: str, extra: dict = None):
+        Log.add_filter("extra_context", process_extra_context(extra))
         Log.root_logger.critical(msg, extra=extra)
