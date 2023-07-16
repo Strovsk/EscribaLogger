@@ -1,10 +1,11 @@
 import logging
-from datetime import datetime
 import os
+from datetime import datetime
+from typing import Optional, TypedDict
+
+from rich.highlighter import Highlighter
 from rich.logging import RichHandler
 from rich.text import Text
-from rich.highlighter import Highlighter
-from typing import TypedDict, Optional
 
 
 class DriverOption(TypedDict):
@@ -12,9 +13,13 @@ class DriverOption(TypedDict):
 
 
 def driver_file(driver_option: DriverOption = None):
+    if not driver_option:
+        driver_option = {"file_location": "logs"}
+
     formatter_string = "[%(asctime)s] "
     formatter_string += "%(name)s.%(levelname)s"
     formatter_string += " - %(message)s"
+    formatter_string += "%(extra_context)s"
 
     formatter = logging.Formatter(formatter_string)
     # formatter.default_time_format = '%Y-%m-%d %H:%M:%s'
