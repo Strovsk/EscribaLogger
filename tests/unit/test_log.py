@@ -2,7 +2,7 @@ import logging
 
 import pytest
 
-from src.Log import Log
+from src.EscribaLogger.Log import Log
 
 
 @pytest.fixture
