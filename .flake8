@@ -1,0 +1,6 @@
+[flake8]
+exclude = .git,__pycache__,docs,env,logs,.env,.venv
+max-complexity = 10
+max-line-length = 88 # Necessary support for Black Formatter
+extend-ignore = E203 # Necessary support for Black Formatter
+max-doc-length = 999
