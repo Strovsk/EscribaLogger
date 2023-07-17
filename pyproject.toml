@@ -4,7 +4,7 @@ build-backend = "flit_core.buildapi"
 
 [project]
 name = "EscribaLogger"
-version = "1.0"
+version = "1.1"
 authors = [
   { name="Thiago Santa Clara Pereira", email="strovsk@outlook.com" },
 ]
@@ -16,6 +16,12 @@ classifiers = [
     "Programming Language :: Python :: 3",
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
+]
+dependencies=[
+  "markdown-it-py==3.0.0",
+  "mdurl==0.1.2",
+  "Pygments==2.15.1",
+  "rich==13.4.2",
 ]
 
 [project.urls]
