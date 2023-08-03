@@ -1,6 +1,6 @@
 import pytest
 
-from src.EscribaLogger.process_extra_context import process_extra_context
+from EscribaLogger.process_extra_context import process_extra_context
 
 
 @pytest.mark.parametrize(

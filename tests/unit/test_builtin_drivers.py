@@ -1,9 +1,15 @@
 from logging import FileHandler
 
 import pytest
+from graypy import GELFHTTPHandler
 from rich.logging import RichHandler
 
-from src.EscribaLogger.drivers import DriverOption, driver_file, driver_stdout
+from EscribaLogger.drivers import (
+    DriverOption,
+    driver_file,
+    driver_graylog,
+    driver_stdout,
+)
 
 
 @pytest.fixture
@@ -15,6 +21,12 @@ def stdout_stream():
 def file_stream():
     options: DriverOption = {"file_location": "logs"}
     return driver_file(options)
+
+
+@pytest.fixture
+def graylog_stream():
+    options: DriverOption = {"graylog_host": "localhost", "graylog_port": 12205}
+    return driver_graylog(options)
 
 
 def test_driver_stdout_should_be_a_stream(stdout_stream: RichHandler):
@@ -35,3 +47,8 @@ def test_driver_file_should_init_in_debug_mode(file_stream: FileHandler):
     stream_level = file_stream.level
     debug_code = 0
     assert stream_level == debug_code
+
+
+def test_driver_graylog_should_be_a_stream(graylog_stream: GELFHTTPHandler):
+    typeO = type(graylog_stream)
+    assert isinstance(graylog_stream, GELFHTTPHandler)
