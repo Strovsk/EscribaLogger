@@ -3,6 +3,7 @@ import os
 from datetime import datetime
 from typing import Optional, TypedDict
 
+import graypy
 from rich.highlighter import Highlighter
 from rich.logging import RichHandler
 from rich.text import Text
@@ -10,6 +11,9 @@ from rich.text import Text
 
 class DriverOption(TypedDict):
     file_location: Optional[str]
+    graylog_host: Optional[str]
+    graylog_port: Optional[int]
+    graylog_protocol: Optional[str]
 
 
 def driver_file(driver_option: DriverOption = None):
@@ -55,3 +59,14 @@ def driver_stdout(driver_option: DriverOption = None):
     rich_handler.setFormatter(formatter)
 
     return rich_handler
+
+
+def driver_graylog(driver_options: DriverOption = None):
+    graylog_host = driver_options.get("graylog_host", "localhost")
+    graylog_port = driver_options.get("graylog_port", 12201)
+
+    formatter_string = "%(name)s.%(levelname)s - %(message)s"
+    formatter = logging.Formatter(formatter_string)
+    stream = graypy.GELFHTTPHandler(graylog_host, graylog_port)
+    stream.setFormatter(formatter)
+    return stream
