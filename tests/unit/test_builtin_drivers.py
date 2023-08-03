@@ -50,5 +50,4 @@ def test_driver_file_should_init_in_debug_mode(file_stream: FileHandler):
 
 
 def test_driver_graylog_should_be_a_stream(graylog_stream: GELFHTTPHandler):
-    typeO = type(graylog_stream)
     assert isinstance(graylog_stream, GELFHTTPHandler)

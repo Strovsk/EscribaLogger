@@ -4,7 +4,7 @@ build-backend = "flit_core.buildapi"
 
 [project]
 name = "EscribaLogger"
-version = "1.2"
+version = "1.21"
 authors = [
   { name="Thiago Santa Clara Pereira", email="strovsk@outlook.com" },
 ]

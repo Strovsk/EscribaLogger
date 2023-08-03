@@ -1,13 +1,13 @@
 import logging
 
 from .DPSingleton import DPSingleton
-from .drivers import DriverOption, driver_file, driver_stdout
+from .drivers import DriverOption, driver_file, driver_graylog, driver_stdout
 from .process_extra_context import process_extra_context
 
 
 class Log(metaclass=DPSingleton):
     root_logger: logging.Logger = logging.getLogger("EscribaLogger")
-    drivers = {"file": driver_file, "stdout": driver_stdout}
+    drivers = {"file": driver_file, "stdout": driver_stdout, "graylog": driver_graylog}
 
     def __init__(self, log_name: str = None) -> None:
         self.root_logger.name = log_name
