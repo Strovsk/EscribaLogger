@@ -1,7 +1,7 @@
 import logging
 import os
 from datetime import datetime
-from typing import Optional, TypedDict
+from typing import Literal, Optional, TypedDict
 
 import graypy
 from rich.highlighter import Highlighter
@@ -13,7 +13,7 @@ class DriverOption(TypedDict):
     file_location: Optional[str]
     graylog_host: Optional[str]
     graylog_port: Optional[int]
-    graylog_protocol: Optional[str]
+    graylog_protocol: Optional[Literal["http", "udp"]]
 
 
 def driver_file(driver_option: DriverOption = None):
@@ -64,9 +64,16 @@ def driver_stdout(driver_option: DriverOption = None):
 def driver_graylog(driver_options: DriverOption = None):
     graylog_host = driver_options.get("graylog_host", "localhost")
     graylog_port = driver_options.get("graylog_port", 12201)
+    protocol = driver_options.get("graylog_protocol", "http")
 
     formatter_string = "%(name)s.%(levelname)s - %(message)s"
     formatter = logging.Formatter(formatter_string)
     stream = graypy.GELFHTTPHandler(graylog_host, graylog_port)
+
+    if protocol == "http":
+        stream = graypy.GELFUDPHandler(graylog_host, graylog_port)
+    elif protocol == "udp":
+        stream = graypy.GELFHTTPHandler(graylog_host, graylog_port)
+
     stream.setFormatter(formatter)
     return stream
