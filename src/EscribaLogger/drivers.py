@@ -1,7 +1,7 @@
 import logging
 import os
 from datetime import datetime
-from typing import Literal, Optional, TypedDict
+from typing import Literal, Optional, TypeAlias, TypedDict
 
 import graypy
 from rich.highlighter import Highlighter
@@ -9,14 +9,17 @@ from rich.logging import RichHandler
 from rich.text import Text
 
 
-class DriverOption(TypedDict):
+class DriverOptions(TypedDict):
     file_location: Optional[str]
     graylog_host: Optional[str]
     graylog_port: Optional[int]
     graylog_protocol: Optional[Literal["http", "udp"]]
 
 
-def driver_file(driver_option: DriverOption = None):
+t_available_drivers: TypeAlias = Literal["file", "stdout", "graylog"]
+
+
+def driver_file(driver_option: DriverOptions = None):
     if not driver_option:
         driver_option = {"file_location": "logs"}
 
@@ -38,7 +41,7 @@ def driver_file(driver_option: DriverOption = None):
     return stream
 
 
-def driver_stdout(driver_option: DriverOption = None):
+def driver_stdout(driver_option: DriverOptions = None):
     class LogNameHighlighter(Highlighter):
         def highlight(self, text: Text) -> None:
             text.highlight_regex(r"^\w+ - ", style="black italic")
@@ -61,7 +64,7 @@ def driver_stdout(driver_option: DriverOption = None):
     return rich_handler
 
 
-def driver_graylog(driver_options: DriverOption = None):
+def driver_graylog(driver_options: DriverOptions = None):
     graylog_host = driver_options.get("graylog_host", "localhost")
     graylog_port = driver_options.get("graylog_port", 12201)
     protocol = driver_options.get("graylog_protocol", "http")
@@ -70,9 +73,9 @@ def driver_graylog(driver_options: DriverOption = None):
     formatter = logging.Formatter(formatter_string)
     stream = graypy.GELFHTTPHandler(graylog_host, graylog_port)
 
-    if protocol == "http":
+    if protocol == "udp":
         stream = graypy.GELFUDPHandler(graylog_host, graylog_port)
-    elif protocol == "udp":
+    elif protocol == "http":
         stream = graypy.GELFHTTPHandler(graylog_host, graylog_port)
 
     stream.setFormatter(formatter)
