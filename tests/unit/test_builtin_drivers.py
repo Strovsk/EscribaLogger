@@ -5,7 +5,7 @@ from graypy import GELFHTTPHandler
 from rich.logging import RichHandler
 
 from EscribaLogger.drivers import (
-    DriverOption,
+    DriverOptions,
     driver_file,
     driver_graylog,
     driver_stdout,
@@ -19,13 +19,13 @@ def stdout_stream():
 
 @pytest.fixture
 def file_stream():
-    options: DriverOption = {"file_location": "logs"}
+    options: DriverOptions = {"file_location": "logs"}
     return driver_file(options)
 
 
 @pytest.fixture
 def graylog_stream():
-    options: DriverOption = {"graylog_host": "localhost", "graylog_port": 12205}
+    options: DriverOptions = {"graylog_host": "localhost", "graylog_port": 12205}
     return driver_graylog(options)
 
 
