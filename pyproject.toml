@@ -4,7 +4,7 @@ build-backend = "pdm.backend"
 
 [project]
 name = "EscribaLogger"
-version = "1.22.1"
+version = "1.22.3"
 authors = [
     { name="Thiago Santa Clara Pereira", email="strovsk@outlook.com" },
 ]
