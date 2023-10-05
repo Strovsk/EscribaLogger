@@ -1,7 +1,13 @@
 import logging
 
 from .DPSingleton import DPSingleton
-from .drivers import DriverOption, driver_file, driver_graylog, driver_stdout
+from .drivers import (
+    DriverOptions,
+    driver_file,
+    driver_graylog,
+    driver_stdout,
+    t_available_drivers,
+)
 from .process_extra_context import process_extra_context
 
 
@@ -40,9 +46,9 @@ class Log(metaclass=DPSingleton):
 
     @staticmethod
     def add_driver(
-        driver_name: str = "stdout",
+        driver_name: t_available_drivers = "stdout",
         driver_func: callable = None,
-        driver_options: DriverOption = None,
+        driver_options: DriverOptions = None,
     ):
         if driver_func:
             Log.drivers[driver_name] = driver_func
