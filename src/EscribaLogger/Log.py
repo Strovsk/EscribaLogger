@@ -48,7 +48,7 @@ class Log(metaclass=DPSingleton):
     def add_driver(
         driver_name: t_available_drivers = "stdout",
         driver_func: callable = None,
-        driver_options: DriverOptions = None,
+        driver_options: DriverOptions = {},
     ):
         if driver_func:
             Log.drivers[driver_name] = driver_func
@@ -61,7 +61,7 @@ class Log(metaclass=DPSingleton):
                 Log.root_logger.handlers,
             )
         )
-        stream = Log.drivers[driver_name](driver_options)
+        stream = Log.drivers[driver_name](driver_options.get(driver_name, {}))
         if type(stream).__name__ in current_handlers_list:
             return
 
