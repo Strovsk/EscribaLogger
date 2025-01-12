@@ -41,7 +41,7 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           directory: ./tests/tmp
-          files: ./unit_result.xml
+          file: ./tests/tmp/unit_result.xml
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5
