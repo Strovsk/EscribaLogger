@@ -1,7 +1,6 @@
 {
     // Editor
     "editor.formatOnSave": true,
-    
     // Python
     "flake8.args": [
         "--config=.flake8"
@@ -18,5 +17,17 @@
         }
     },
     "python.formatting.provider": "black",
-    "isort.args": ["--profile", "black"]
+    "isort.args": [
+        "--profile",
+        "black"
+    ],
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/CVS": true,
+        "**/.DS_Store": true,
+        "**/Thumbs.db": true,
+        "**/__pycache__": true,
+    }
 }
