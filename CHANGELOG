@@ -11,6 +11,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fluentd driver for logging
 - Live streaming of logs
 
+## [2.0.1] - 2025-01-11
+
+### Added
+
+- Added more documentation about setup and usage
+
 ## [2.0] - 2025-01-11
 
 ### Added
