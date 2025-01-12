@@ -1,7 +1,7 @@
 [![codecov](https://codecov.io/gh/Strovsk/EscribaLogger/graph/badge.svg?token=FJFYOM8X4U)](https://codecov.io/gh/Strovsk/EscribaLogger)
 
 <p align="center">
-   <img src="./docs/assets/escriba%20logger%20background.png" alt="Escriba Logger Logo" width="300">
+   <img src="https://raw.githubusercontent.com/Strovsk/EscribaLogger/refs/heads/main/docs/assets/escriba%20logger%20background.png" alt="Escriba Logger Logo" width="300">
 </p>
 
 # Get Started
