@@ -35,6 +35,14 @@ jobs:
           files: |
             tests/tmp/unit_result.xml
 
+      - name: Upload test results to Codecov
+        if: always()
+        uses: codecov/test-results-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          directory: ./tests/tmp
+          files: ./unit_result.xml
+
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5
         if: always()
