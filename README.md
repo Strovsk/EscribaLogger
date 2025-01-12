@@ -19,11 +19,15 @@ Just import, add drivers and use:
 ```python
 from EscribaLogger import Log
 
-Log.add_driver('stdout') # important!
+# Initilize
+Log()
 Log.set_logger_name('CustomName')
 
-Log.info('My info message')
-# > [07/16/23 17:01:06] INFO  CustomName - My info message
+# Add drivers (stdout, file, graylog, flutend etc)
+Log.add_driver('stdout')
+
+Log.info('My info message', {'context_var': 'value'})
+# > [01/12/25 20:30:20] INFO     CustomName - My info message                                                                <stdin>:1
 ```
 
 ## Log file driver
