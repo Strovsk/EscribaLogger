@@ -37,6 +37,7 @@ jobs:
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5
+        if: always()
         with:
           directory: ./tests/tmp/coverage
           env_vars: OS,PYTHON
