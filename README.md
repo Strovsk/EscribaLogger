@@ -1,3 +1,5 @@
+[![codecov](https://codecov.io/gh/Strovsk/EscribaLogger/graph/badge.svg?token=FJFYOM8X4U)](https://codecov.io/gh/Strovsk/EscribaLogger)
+
 # Get Started
 
 ## install

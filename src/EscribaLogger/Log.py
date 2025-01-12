@@ -48,7 +48,7 @@ class Log(metaclass=DPSingleton):
     def add_driver(
         driver_name: t_available_drivers = "stdout",
         driver_func: callable = None,
-        driver_options: DriverOptions = None,
+        driver_options: DriverOptions = {},
     ):
         if driver_func:
             Log.drivers[driver_name] = driver_func
@@ -61,7 +61,7 @@ class Log(metaclass=DPSingleton):
                 Log.root_logger.handlers,
             )
         )
-        stream = Log.drivers[driver_name](driver_options)
+        stream = Log.drivers[driver_name](driver_options.get(driver_name, {}))
         if type(stream).__name__ in current_handlers_list:
             return
 
@@ -92,23 +92,23 @@ class Log(metaclass=DPSingleton):
     @staticmethod
     def info(msg: str, extra: dict = None):
         Log.add_filter("extra_context", process_extra_context(extra))
-        Log.root_logger.info(msg, extra=extra)
+        Log.root_logger.info(msg, extra=extra, stacklevel=2)
 
     @staticmethod
     def warning(msg: str, extra: dict = None):
         Log.add_filter("extra_context", process_extra_context(extra))
-        Log.root_logger.warning(msg, extra=extra)
+        Log.root_logger.warning(msg, extra=extra, stacklevel=2)
 
     @staticmethod
     def warn(msg: str, extra: dict = None):
-        Log.root_logger.warning(msg, extra=extra)
+        Log.root_logger.warning(msg, extra=extra, stacklevel=2)
 
     @staticmethod
     def error(msg: str, extra: dict = None):
         Log.add_filter("extra_context", process_extra_context(extra))
-        Log.root_logger.error(msg, extra=extra)
+        Log.root_logger.error(msg, extra=extra, stacklevel=2)
 
     @staticmethod
     def critical(msg: str, extra: dict = None):
         Log.add_filter("extra_context", process_extra_context(extra))
-        Log.root_logger.critical(msg, extra=extra)
+        Log.root_logger.critical(msg, extra=extra, stacklevel=2)
