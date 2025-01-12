@@ -1,5 +1,9 @@
 [![codecov](https://codecov.io/gh/Strovsk/EscribaLogger/graph/badge.svg?token=FJFYOM8X4U)](https://codecov.io/gh/Strovsk/EscribaLogger)
 
+<p align="center">
+   <img src="./docs/assets/escriba%20logger%20background.png" alt="Escriba Logger Logo" width="300">
+</p>
+
 # Get Started
 
 ## install
@@ -52,21 +56,17 @@ Log.info('Some message', extra={"context_var": "value"})
 
 ## Setup env
 
-1. init the pyenv:
+1. install pdm
 
-   - Windows: `python -m venv env --prompt escriba-logger-pyenv`
-   - Linux/Unix: `python3 -m venv env --prompt escriba-logger-pyenv`
+```console
+python -m pip install pdm
+```
 
-1. activate pyenv:
+2. install dependencies
 
-   - Windows (**CMD/PowerShell**): `env/Scripts/activate.bat`
-   - Windows (**GitBash/Cygwin**): `source env/Scripts/activate`
-   - Linux/Unix: `source env/bin/activate`
-
-1. Install Dependencies:
-
-   - Windows (**CMD/PowerShell**): `python -m pip install -r requirements.dev.txt`
-   - Linux/Unix: `python -m pip install -r requirements.dev.txt`
+```console
+pdm install
+```
 
 ## Tests
 
@@ -74,46 +74,19 @@ We are using [pytest](https://docs.pytest.org/en/7.4.x/) and [coverage.py](https
 You can run the tests by using:
 
 ```console
-# Don't forget activate pyenv!!!
-
-[~/EscribaLogger] -> source env/bin/activate
-
-# run the pytests + coverage
-(escriba-logger-pyenv) [~/EscribaLogger] -> python -m coverage run -m pytest -l -v
-# it can be simplified using "coverage run -m pytest -l -v"
-
-
-====================================test session starts ====================================
-platform win32 -- Python 3.11.4, pytest-7.4.0, pluggy-1.2.0 -- C:\Users\strov\Documents\github\EscribaLogger\env\Scripts\python.exe
-cachedir: .pytest_cache
-rootdir: C:\Users\strov\Documents\github\EscribaLogger
-configfile: pytest.ini
-plugins: anyio-3.7.1, mock-3.11.1
-collected 5 items
-
-tests/unit/test_builtin_drivers.py::test_driver_stdout... PASSED                     [ 20%]
-tests/unit/test_builtin_drivers.py::test_driver_stdout... PASSED                     [ 40%]
-tests/unit/test_builtin_drivers.py::test_driver_file_s... PASSED                     [ 60%]
-tests/unit/test_builtin_drivers.py::test_driver_file_s... PASSED                     [ 80%]
-tests/unit/test_extra_content.py::test_extra_context_p... PASSED                     [100%]
-
-===================================== 5 passed in 0.21s ===================================
-
-Continue below...
+pdm run test:unit
 ```
 
 the command above will generate the `.coverage` file in root path. Now you can generate the coverage report
 
+### Coverage
+
 ```console
-(escriba-logger-pyenv) [~/EscribaLogger] -> coverage report -m
-
-OR
-
-(escriba-logger-pyenv) [~/EscribaLogger] -> python -m coverage report -m
+coverage report -m
 ```
 
 Or you can create a entire webpage to see the results:
 
 ```console
-(escriba-logger-pyenv) [~/EscribaLogger] -> coverage html
+pdm run coverage html
 ```
