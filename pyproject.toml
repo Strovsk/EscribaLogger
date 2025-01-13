@@ -4,7 +4,7 @@ build-backend = "pdm.backend"
 
 [project]
 name = "EscribaLogger"
-version = "2.0.2"
+version = "2.0.3"
 authors = [
     { name="Thiago Santa Clara Pereira", email="strovsk@outlook.com" },
 ]
@@ -18,10 +18,9 @@ classifiers = [
     "Operating System :: OS Independent",
 ]
 dependencies=[
-    "markdown-it-py==3.0.0",
-    "mdurl==0.1.2",
-    "Pygments==2.15.1",
-    "rich==13.4.2",
+    "markdown-it-py>=3.0.0",
+    "mdurl>=0.1.2",
+    "rich>=13.4.2",
     "graypy>=2.1.0",
 ]
 license = {text = "MIT"}
